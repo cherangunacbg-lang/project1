@@ -1,0 +1,95 @@
+import java.awt.LayoutManager;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
+public class ATMGUI extends JFrame implements ActionListener {
+   JTextField pinField;
+   JButton loginBtn;
+   JButton balanceBtn;
+   JButton withdrawBtn;
+   JButton depositBtn;
+   JButton exitBtn;
+   ATM atm = new ATM();
+
+   ATMGUI() {
+      this.setTitle("ATM Machine");
+      this.setSize(400, 400);
+      this.setLayout((LayoutManager)null);
+      this.setDefaultCloseOperation(3);
+      JLabel var1 = new JLabel("ATM LOGIN");
+      var1.setBounds(150, 30, 100, 30);
+      JLabel var2 = new JLabel("Enter PIN:");
+      var2.setBounds(50, 100, 100, 30);
+      this.pinField = new JTextField();
+      this.pinField.setBounds(150, 100, 150, 30);
+      this.loginBtn = new JButton("Login");
+      this.loginBtn.setBounds(150, 150, 100, 30);
+      this.add(var1);
+      this.add(var2);
+      this.add(this.pinField);
+      this.add(this.loginBtn);
+      this.loginBtn.addActionListener(this);
+      this.setVisible(true);
+   }
+
+   public void showMenu() {
+      this.getContentPane().removeAll();
+      this.balanceBtn = new JButton("Check Balance");
+      this.withdrawBtn = new JButton("Withdraw");
+      this.depositBtn = new JButton("Deposit");
+      this.exitBtn = new JButton("Exit");
+      this.balanceBtn.setBounds(100, 50, 200, 40);
+      this.withdrawBtn.setBounds(100, 100, 200, 40);
+      this.depositBtn.setBounds(100, 150, 200, 40);
+      this.exitBtn.setBounds(100, 200, 200, 40);
+      this.add(this.balanceBtn);
+      this.add(this.withdrawBtn);
+      this.add(this.depositBtn);
+      this.add(this.exitBtn);
+      this.balanceBtn.addActionListener(this);
+      this.withdrawBtn.addActionListener(this);
+      this.depositBtn.addActionListener(this);
+      this.exitBtn.addActionListener(this);
+      this.repaint();
+      this.validate();
+   }
+
+   public void actionPerformed(ActionEvent var1) {
+      if (var1.getSource() == this.loginBtn) {
+         int var2 = Integer.parseInt(this.pinField.getText());
+         if (this.atm.checkPin(var2)) {
+            this.showMenu();
+         } else {
+            JOptionPane.showMessageDialog(this, "Wrong PIN");
+         }
+      }
+
+      if (var1.getSource() == this.balanceBtn) {
+         JOptionPane.showMessageDialog(this, "Balance: £5000");
+      }
+
+      if (var1.getSource() == this.withdrawBtn) {
+         String var3 = JOptionPane.showInputDialog("Enter Amount");
+         JOptionPane.showMessageDialog(this, "Withdraw Successful");
+      }
+
+      if (var1.getSource() == this.depositBtn) {
+         String var4 = JOptionPane.showInputDialog("Enter Amount");
+         JOptionPane.showMessageDialog(this, "Deposit Successful");
+      }
+
+      if (var1.getSource() == this.exitBtn) {
+         System.exit(0);
+      }
+
+   }
+
+   public static void main(String[] var0) {
+      new ATMGUI();
+   }
+}
